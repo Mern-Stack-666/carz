@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"
+    />
+    <meta name="theme-color" content="#120d1d" />
+    <meta
+      name="description"
+      content="Raftaar Nitro — Original 3D arcade racing game. Collect nitro to boost and unlock cars!"
+    />
+    <title>Raftaar Nitro — 3D Arcade Racing</title>
+    <link rel="manifest" href="./manifest.webmanifest" />
+    <link rel="icon" type="image/png" sizes="192x192" href="./icons/icon-192.png" />
+    <link rel="apple-touch-icon" href="./icons/icon-192.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,500;0,600;0,700;1,700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <!-- WebGL Viewport -->
+    <div id="game-container"></div>
+
+    <!-- Raftaar Pulse Signature Nitro Edge Glow -->
+    <div id="raftaar-pulse" aria-hidden="true"></div>
+
+    <!-- Loading Overlay -->
+    <div id="loading-screen" class="screen-overlay hidden">
+      <div class="loading-card">
+        <div class="brand-lockup small">
+          <span class="brand-bolt">⚡</span>
+          <span class="brand-text">RAFTAAR <em>NITRO</em></span>
+        </div>
+        <div class="loading-track-name" id="loading-track-name">Preparing Track...</div>
+        <div class="progress-bar-wrap">
+          <div class="progress-bar-fill" id="loading-progress-bar"></div>
+        </div>
+        <div class="loading-tip" id="loading-tip">
+          Collect Nitro canisters to boost NOW and buy faster rides LATER.
+        </div>
+      </div>
+    </div>
+
+    <!-- In-Game HUD -->
+    <div id="hud-overlay" class="hidden">
+      <div class="hud-top">
+        <div class="hud-pill hud-level hidden" id="hud-level-pill">
+          <span class="hud-label">LVL</span>
+          <span class="hud-value" id="hud-level">1</span>
+        </div>
+        <div class="hud-pill hud-pos">
+          <span class="hud-label">POS</span>
+          <span class="hud-value" id="hud-position">1<small>/6</small></span>
+        </div>
+        <div class="hud-pill hud-lap">
+          <span class="hud-label">LAP</span>
+          <span class="hud-value" id="hud-lap">1<small>/3</small></span>
+        </div>
+        <div class="hud-pill hud-timers">
+          <div><span class="hud-label">TIME</span> <span id="hud-timer">00:00.00</span></div>
+          <div class="hud-sub"><span class="hud-label">BEST</span> <span id="hud-best-lap">--:--.--</span></div>
+        </div>
+        <div class="hud-top-right">
+          <div class="hud-pill hud-coins">
+            <span class="coin-icon">◆</span>
+            <span id="hud-coins">0</span>
+          </div>
+          <div class="hud-pill hud-fps" id="hud-fps">60 FPS</div>
+          <button class="hud-icon-btn" id="btn-pause" title="Pause (Esc)">❚❚</button>
+        </div>
+      </div>
+
+      <!-- Wrong Way / Stuck / Countdown Banners -->
+      <div id="hud-countdown" class="hud-countdown hidden">3</div>
+      <div id="hud-alert" class="hud-alert hidden">WRONG WAY</div>
+      <div id="hud-popups" class="hud-popups"></div>
+
+      <!-- Minimap -->
+      <canvas id="hud-minimap" width="140" height="140"></canvas>
+
+      <!-- Bottom Gauges -->
+      <div class="hud-bottom">
+        <div class="hud-controls-hint" id="hud-controls-hint">
+          <span><b>WASD/Arrows</b> Drive</span>
+          <span><b>Space</b> Drift</span>
+          <span><b>Shift</b> Nitro</span>
+          <span><b>C</b> Camera</span>
+          <span><b>R</b> Reset</span>
+        </div>
+
+        <div class="hud-gauges">
+          <div class="nitro-gauge-wrap">
+            <div class="nitro-gauge-header">
+              <span>NITRO BOOST</span>
+              <span id="hud-nitro-pct">0%</span>
+            </div>
+            <div class="nitro-bar-outer">
+              <div class="nitro-bar-inner" id="hud-nitro-bar"></div>
+            </div>
+          </div>
+          <div class="speedo-wrap">
+            <div class="speedo-value" id="hud-speed">0</div>
+            <div class="speedo-unit">KM/H</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mobile Touch Controls -->
+      <div id="touch-controls" class="touch-controls hidden">
+        <div class="touch-left">
+          <button class="touch-btn touch-steer" id="touch-left" aria-label="Steer Left">◀</button>
+          <button class="touch-btn touch-steer" id="touch-right" aria-label="Steer Right">▶</button>
+        </div>
+        <div class="touch-right">
+          <button class="touch-btn touch-nitro" id="touch-nitro" aria-label="Nitro">NITRO</button>
+          <div class="touch-pedals">
+            <button class="touch-btn touch-brake" id="touch-brake" aria-label="Brake">BRAKE</button>
+            <button class="touch-btn touch-drift" id="touch-drift" aria-label="Drift">DRIFT</button>
+            <button class="touch-btn touch-gas" id="touch-gas" aria-label="Gas">GAS</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Menu & Sub-Screens -->
+    <div id="ui-root" class="ui-root"></div>
+
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>

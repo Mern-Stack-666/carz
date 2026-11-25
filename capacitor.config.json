@@ -1,0 +1,9 @@
+{
+  "appId": "com.raftaar.nitro",
+  "appName": "Raftaar Nitro",
+  "webDir": "dist",
+  "android": {
+    "backgroundColor": "#100b1c",
+    "allowMixedContent": false
+  }
+}
